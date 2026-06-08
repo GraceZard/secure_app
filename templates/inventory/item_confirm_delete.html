@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Delete Item{% endblock %}
+{% block content %}
+<div class="flex justify-center items-center min-h-[70vh]">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
+        <div class="text-red-500 text-5xl mb-4">⚠️</div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Confirm Deletion</h2>
+        <p class="text-gray-600 mb-6">Are you sure you want to delete <strong class="font-semibold">{{ item.name }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex justify-center space-x-4">
+                <a href="{% url 'inventory:item_list' %}" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg transition">Cancel</a>
+                <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition">Yes, delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

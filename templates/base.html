@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}Secure App{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'secure-dark': '#1e293b',
+                        'secure-primary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            ring: 2px solid #3b82f6;
+            border-color: transparent;
+        }
+        button, a { transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <nav class="bg-secure-dark text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap">
+            <a href="{% url 'login' %}" class="text-2xl font-bold tracking-tight">🔒 SecureApp</a>
+            <div class="space-x-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'inventory:item_list' %}" class="hover:text-blue-300">📦 Inventory</a>
+                    <a href="{% url 'profile' %}" class="hover:text-blue-300">👤 Profile</a>
+                    {% if user.role == 'admin' %}
+                        <a href="{% url 'audit_log' %}" class="hover:text-blue-300">📜 Audit Log</a>
+                    {% endif %}
+                    <form method="post" action="{% url 'logout' %}" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="hover:text-red-300 bg-transparent border-none cursor-pointer">🚪 Logout ({{ user.username }})</button>
+</form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:text-blue-300">Login</a>
+                    <a href="{% url 'register' %}" class="hover:text-blue-300">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+        <div class="container mx-auto px-4 mt-4 space-y-2">
+            {% for message in messages %}
+                <div class="p-4 rounded-lg shadow-md {% if message.tags == 'error' %}bg-red-100 text-red-700 border-l-4 border-red-500{% else %}bg-green-100 text-green-700 border-l-4 border-green-500{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-4">
+            © 2025 Secure Development Project | OWASP Compliant | Django + Tailwind
+        </div>
+    </footer>
+</body>
+</html>
