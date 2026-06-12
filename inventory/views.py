@@ -16,6 +16,10 @@ class ItemListView(LoginRequiredMixin, ListView):
     model = Item
     template_name = 'inventory/item_list.html'
     context_object_name = 'items'
+    
+    def get_queryset(self):
+    # Only return items created by the current user
+        return Item.objects.filter(created_by=self.request.user)
 
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
@@ -38,10 +42,11 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ItemForm
     success_url = reverse_lazy('inventory:item_list')
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.role != 'admin':
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.created_by != self.request.user or self.request.user.role != 'admin':
             raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+        return obj
 
 
 class ItemDeleteView(LoginRequiredMixin, DeleteView):
@@ -49,10 +54,11 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('inventory:item_list')
     template_name = 'inventory/item_confirm_delete.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.role != 'admin':
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.created_by != self.request.user or self.request.user.role != 'admin':
             raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+        return obj
 
 
 def get_client_ip(request):
@@ -81,7 +87,8 @@ def stock_in(request, pk):
         raise PermissionDenied
 
     with transaction.atomic():
-        item = get_object_or_404(Item.objects.select_for_update(), pk=pk)
+        # Add created_by condition
+        item = get_object_or_404(Item.objects.select_for_update(), pk=pk, created_by=request.user)
         old_quantity = item.quantity
         item.quantity += 1
         item.save(update_fields=['quantity'])
@@ -98,7 +105,8 @@ def stock_out(request, pk):
         raise PermissionDenied
 
     with transaction.atomic():
-        item = get_object_or_404(Item.objects.select_for_update(), pk=pk)
+        # Add created_by condition
+        item = get_object_or_404(Item.objects.select_for_update(), pk=pk, created_by=request.user)
         if item.quantity <= 0:
             messages.error(request, f"Cannot remove stock: '{item.name}' quantity is already zero.")
             return redirect('inventory:item_list')

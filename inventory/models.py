@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from auditlog.registry import auditlog   # <-- ADD THIS LINE
 
 class Item(models.Model):
     name = models.CharField(max_length=100)
@@ -9,3 +10,6 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+# Register the model to be audited
+auditlog.register(Item)   # <-- ADD THIS LINE AT THE END
