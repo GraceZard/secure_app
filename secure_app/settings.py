@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'inventory',
     'audit',
     'auditlog',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,16 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
+# At the bottom of settings.py, add:
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailOrUsernameBackend',
+    'django.contrib.auth.backends.ModelBackend',   # fallback
+]
+
+# Media files (uploaded images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+CART_SESSION_ID = 'cart'

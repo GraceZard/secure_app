@@ -2,81 +2,193 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>{% block title %}Secure App{% endblock %}</title>
+    <title>{% block title %}ButterflyShop – Pretty Finds{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'secure-dark': '#1e293b',
-                        'secure-primary': '#3b82f6',
+                        'butterfly-purple': '#9b59b6',
+                        'butterfly-pink': '#ff85a1',
+                        'butterfly-light': '#fce4ec',
                     }
                 }
             }
         }
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        input, select, textarea {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            transition: all 0.2s;
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #f8e8ff 100%);
         }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            ring: 2px solid #3b82f6;
-            border-color: transparent;
+        .sidebar-link {
+            transition: all 0.2s ease;
         }
-        button, a { transition: all 0.2s ease; }
+        .sidebar-link:hover {
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+            transform: translateX(4px);
+        }
+        .sidebar-link.active {
+            background: linear-gradient(135deg, #9b59b6, #ff85a1);
+            color: white;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #9b59b6, #ff85a1);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #8e44ad, #ff6b8b);
+        }
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #d8b4e2;
+            border-radius: 10px;
+        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="font-sans antialiased">
 
-    <nav class="bg-secure-dark text-white shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap">
-            <a href="{% url 'login' %}" class="text-2xl font-bold tracking-tight">🔒 SecureApp</a>
-            <div class="space-x-4">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'inventory:item_list' %}" class="hover:text-blue-300">📦 Inventory</a>
-                    <a href="{% url 'profile' %}" class="hover:text-blue-300">👤 Profile</a>
-                    {% if user.role == 'admin' %}
-                        <a href="{% url 'audit_log' %}" class="hover:text-blue-300">📜 Audit Log</a>
-                    {% endif %}
-                    <form method="post" action="{% url 'logout' %}" class="inline">
-                    {% csrf_token %}
-                    <button type="submit" class="hover:text-red-300 bg-transparent border-none cursor-pointer">🚪 Logout ({{ user.username }})</button>
-</form>
-                {% else %}
-                    <a href="{% url 'login' %}" class="hover:text-blue-300">Login</a>
-                    <a href="{% url 'register' %}" class="hover:text-blue-300">Register</a>
+<div class="flex min-h-screen">
+    <!-- ========== LEFT SIDEBAR ========== -->
+    <aside class="fixed inset-y-0 left-0 z-40 w-72 bg-white/80 backdrop-blur-md shadow-2xl border-r border-pink-100 flex flex-col sidebar-scroll overflow-y-auto transition-transform duration-300 -translate-x-full lg:translate-x-0">
+        <div class="p-6 border-b border-pink-100">
+            <a href="{% url 'inventory:item_list' %}" class="flex items-center space-x-2 text-2xl font-bold">
+                <i class="fas fa-butterfly text-purple-500 text-3xl"></i>
+                <span class="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">ButterflyShop</span>
+            </a>
+            {% if user.is_authenticated %}
+                <div class="mt-4 text-sm text-gray-500">
+                    <i class="fas fa-user-circle text-pink-400"></i> {{ user.username }}
+                </div>
+            {% endif %}
+        </div>
+
+        <nav class="flex-1 py-6 px-4 space-y-1">
+            {% if user.is_authenticated %}
+                <!-- Shop – everyone -->
+                <a href="{% url 'inventory:item_list' %}" 
+                   class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 {% if request.resolver_match.url_name == 'item_list' or 'inventory' in request.path %}active{% endif %}">
+                    <i class="fas fa-store w-5"></i>
+                    <span>Shop</span>
+                </a>
+                <!-- Profile – everyone -->
+                <a href="{% url 'profile' %}" 
+                   class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+                    <i class="fas fa-user-circle w-5"></i>
+                    <span>Profile</span>
+                </a>
+
+                <!-- Cart & My Orders – only for regular users (non‑admin) -->
+                {% if user.role != 'admin' %}
+                <a href="{% url 'cart:detail' %}" 
+                   class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 {% if request.resolver_match.url_name == 'detail' %}active{% endif %}">
+                    <i class="fas fa-shopping-cart w-5"></i>
+                    <span>Cart</span>
+                </a>
+                <a href="{% url 'cart:order_history' %}" 
+                   class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 {% if request.resolver_match.url_name == 'order_history' %}active{% endif %}">
+                    <i class="fas fa-history w-5"></i>
+                    <span>My Orders</span>
+                </a>
                 {% endif %}
+
+                <!-- Audit Log – only for admin -->
+                {% if user.role == 'admin' %}
+                <a href="{% url 'audit_log' %}" 
+                   class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 {% if request.resolver_match.url_name == 'audit_log' %}active{% endif %}">
+                    <i class="fas fa-chart-line w-5"></i>
+                    <span>Audit Log</span>
+                </a>
+                {% endif %}
+
+                <!-- Logout (common) -->
+                <div class="pt-6 mt-6 border-t border-pink-100">
+                    <form method="post" action="{% url 'logout' %}" class="w-full">
+                        {% csrf_token %}
+                        <button type="submit" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 w-full text-left hover:bg-red-50 hover:text-red-600">
+                            <i class="fas fa-sign-out-alt w-5"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <!-- Not logged in -->
+                <a href="{% url 'login' %}" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700">
+                    <i class="fas fa-sign-in-alt w-5"></i>
+                    <span>Login</span>
+                </a>
+                <a href="{% url 'register' %}" class="sidebar-link flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700">
+                    <i class="fas fa-user-plus w-5"></i>
+                    <span>Register</span>
+                </a>
+            {% endif %}
+        </nav>
+
+        <div class="p-4 border-t border-pink-100 text-center text-xs text-gray-400">
+            <i class="fas fa-heart text-pink-300"></i> Pretty finds
+        </div>
+    </aside>
+
+    <!-- ========== MOBILE HAMBURGER BUTTON ========== -->
+    <div class="lg:hidden fixed top-4 left-4 z-50">
+        <button id="mobileMenuBtn" class="bg-white/80 backdrop-blur p-2 rounded-full shadow-md text-purple-600">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-1 lg:ml-72 min-h-screen">
+        <div class="sticky top-0 z-30 bg-white/50 backdrop-blur-sm border-b border-pink-100 px-4 py-3 lg:hidden">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-butterfly text-purple-500 text-xl"></i>
+                    <span class="font-bold text-purple-600">ButterflyShop</span>
+                </div>
             </div>
         </div>
-    </nav>
 
-    {% if messages %}
-        <div class="container mx-auto px-4 mt-4 space-y-2">
-            {% for message in messages %}
-                <div class="p-4 rounded-lg shadow-md {% if message.tags == 'error' %}bg-red-100 text-red-700 border-l-4 border-red-500{% else %}bg-green-100 text-green-700 border-l-4 border-green-500{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+        {% if messages %}
+            <div class="container mx-auto px-4 mt-4 space-y-2">
+                {% for message in messages %}
+                    <div class="p-4 rounded-xl shadow-md {% if message.tags == 'error' %}bg-red-100 text-red-700 border-l-4 border-red-500{% else %}bg-green-100 text-green-700 border-l-4 border-green-500{% endif %}">
+                        <i class="fas fa-info-circle mr-2"></i>{{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="p-4 md:p-8">
+            {% block content %}
+            {% endblock %}
         </div>
-    {% endif %}
 
-    <main class="container mx-auto px-4 py-8">
-        {% block content %}
-        {% endblock %}
+        <footer class="border-t border-pink-100 py-4 text-center text-gray-400 text-xs">
+            <i class="fas fa-heart text-pink-300"></i> ButterflyShop – style & grace
+        </footer>
     </main>
+</div>
 
-    <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-gray-500 text-sm">
-        <div class="container mx-auto px-4">
-            © 2025 Secure Development Project | OWASP Compliant | Django + Tailwind
-        </div>
-    </footer>
+<script>
+    const sidebar = document.querySelector('aside');
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && window.innerWidth < 1024) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+    }
+</script>
 </body>
 </html>

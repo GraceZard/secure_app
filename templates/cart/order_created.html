@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Order Confirmation{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto text-center">
+    <i class="fas fa-check-circle text-green-500 text-5xl mb-4"></i>
+    <h1 class="text-2xl font-bold text-gray-800">Thank you for your order!</h1>
+    <p class="text-gray-600 mt-2">Your order number is #{{ order.id }}</p>
+    <a href="{% url 'inventory:item_list' %}" class="btn-primary text-white px-6 py-2 rounded-full mt-6 inline-block">Continue Shopping</a>
+</div>
+{% endblock %}

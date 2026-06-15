@@ -1,35 +1,40 @@
 {% extends 'base.html' %}
-{% block title %}My Profile{% endblock %}
+{% load static %}
+
+{% block title %}My Profile – ButterflyShop{% endblock %}
+
 {% block content %}
-<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-    <div class="bg-secure-primary px-6 py-4">
-        <h2 class="text-2xl font-bold text-white">User Profile</h2>
-    </div>
-    <div class="p-6">
-        <dl class="divide-y divide-gray-200">
-            <div class="py-3 flex justify-between">
-                <dt class="font-medium text-gray-600">Username</dt>
-                <dd class="text-gray-900">{{ user.username }}</dd>
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden border border-pink-100">
+        <div class="bg-gradient-to-r from-purple-600 to-pink-500 px-6 py-4">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-user-circle"></i> My Profile
+            </h1>
+        </div>
+        <div class="p-6">
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center border-b border-pink-100 pb-3">
+                    <span class="text-gray-600 w-32 font-medium"><i class="fas fa-user text-purple-500 mr-2"></i>Username:</span>
+                    <span class="text-gray-800">{{ user.username }}</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center border-b border-pink-100 pb-3">
+                    <span class="text-gray-600 w-32 font-medium"><i class="fas fa-envelope text-purple-500 mr-2"></i>Email:</span>
+                    <span class="text-gray-800">{{ user.email|default:"Not provided" }}</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center border-b border-pink-100 pb-3">
+                    <span class="text-gray-600 w-32 font-medium"><i class="fas fa-tag text-purple-500 mr-2"></i>Role:</span>
+                    <span class="text-gray-800 capitalize">{{ user.role }}</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center border-b border-pink-100 pb-3">
+                    <span class="text-gray-600 w-32 font-medium"><i class="fas fa-clock text-purple-500 mr-2"></i>Last login:</span>
+                    <span class="text-gray-800">{{ user.last_login|date:"Y-m-d H:i"|default:"Never" }}</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center">
+                    <span class="text-gray-600 w-32 font-medium"><i class="fas fa-calendar-alt text-purple-500 mr-2"></i>Date joined:</span>
+                    <span class="text-gray-800">{{ user.date_joined|date:"Y-m-d" }}</span>
+                </div>
             </div>
-            <div class="py-3 flex justify-between">
-                <dt class="font-medium text-gray-600">Email</dt>
-                <dd class="text-gray-900">{{ user.email|default:"Not provided" }}</dd>
-            </div>
-            <div class="py-3 flex justify-between">
-                <dt class="font-medium text-gray-600">Role</dt>
-                <dd class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if user.role == 'admin' %}bg-red-100 text-red-800{% else %}bg-green-100 text-green-800{% endif %}">
-                    {{ user.get_role_display }}
-                </dd>
-            </div>
-            <div class="py-3 flex justify-between">
-                <dt class="font-medium text-gray-600">Last login</dt>
-                <dd class="text-gray-900">{{ user.last_login|date:"Y-m-d H:i"|default:"Never" }}</dd>
-            </div>
-            <div class="py-3 flex justify-between">
-                <dt class="font-medium text-gray-600">Date joined</dt>
-                <dd class="text-gray-900">{{ user.date_joined|date:"Y-m-d" }}</dd>
-            </div>
-        </dl>
+        </div>
     </div>
 </div>
 {% endblock %}

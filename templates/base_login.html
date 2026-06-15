@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ButterflyShop – Welcome{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            min-height: 100vh;
+        }
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.1);
+        }
+        .auth-input {
+            transition: all 0.2s;
+            border: 1px solid #f0b6d0;
+        }
+        .auth-input:focus {
+            outline: none;
+            border-color: #9b59b6;
+            box-shadow: 0 0 0 3px rgba(155,89,182,0.1);
+        }
+        .btn-auth {
+            background: linear-gradient(135deg, #9b59b6, #ff85a1);
+            transition: all 0.2s;
+        }
+        .btn-auth:hover {
+            background: linear-gradient(135deg, #8e44ad, #ff6b8b);
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div class="min-h-screen flex items-center justify-center px-4 py-8">
+        <div class="w-full max-w-md">
+            <!-- Logo / Brand -->
+            <div class="text-center mb-6">
+                <i class="fas fa-butterfly text-5xl text-purple-500"></i>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mt-2">ButterflyShop</h1>
+                <p class="text-gray-500 text-sm mt-1">where style meets grace</p>
+            </div>
+
+            <!-- Main card -->
+            <div class="auth-card p-6 md:p-8">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            <!-- Footer -->
+            <p class="text-center text-xs text-gray-400 mt-6">
+                <i class="fas fa-heart text-pink-300"></i> Pretty finds, secure shopping
+            </p>
+        </div>
+    </div>
+</body>
+</html>
