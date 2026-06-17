@@ -33,6 +33,7 @@ jobs:
       run: |
         pip install safety
         safety check -r requirements.txt || true
+        pip install Pillow
 
     - name: Run Django tests
       run: |
