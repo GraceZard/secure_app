@@ -18,3 +18,11 @@ ASsecurity/
 
 # Media Uploads
 media/
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+.env
+db.sqlite3
+/media/
