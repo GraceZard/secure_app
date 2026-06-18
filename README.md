@@ -221,15 +221,20 @@ pip install -r requirements.txt
 
 ### 1. Login Page
 User authentication interface with secure password entry.
+<img width="958" height="473" alt="Sign in page" src="https://github.com/user-attachments/assets/c6fb3350-7b20-4cb0-9839-75b25817f4fc" />
+
 
 ### 2. User Registration
 New user account creation with password validation.
+
 
 ### 3. Product Inventory
 Main product listing page showing available items with images and prices.
 
 ### 4. Product Management (Admin)
 Add/Edit/Delete products with image upload capabilities.
+<img width="958" height="442" alt="Admin page" src="https://github.com/user-attachments/assets/4ae21c60-4db9-46d0-a880-4d3d0688d47c" />
+
 
 ### 5. Shopping Cart
 Dynamic cart showing selected items with quantity adjustments and total pricing.
@@ -237,14 +242,20 @@ Dynamic cart showing selected items with quantity adjustments and total pricing.
 ### 6. Checkout Process
 Secure order review and completion interface.
 
+<img width="959" height="436" alt="Checkout page" src="https://github.com/user-attachments/assets/1bc6e012-c313-473e-9568-e5a297cc5e48" />
+
 ### 7. Order History
 User's past orders with status and details.
 
 ### 8. User Profile
 Profile management page displaying account information.
+<img width="955" height="439" alt="Profile page" src="https://github.com/user-attachments/assets/903d876f-a773-4821-83bf-443abf5e7bce" />
+
 
 ### 9. Audit Log (Admin Only)
 Complete activity log showing who did what and when - essential for compliance auditing.
+<img width="959" height="440" alt="Audit log page" src="https://github.com/user-attachments/assets/2aaf7702-c29c-477e-8cbb-97328d420b5d" />
+
 
 ### 10. Django Admin Dashboard
 System administration interface for managing users, products, and system configuration.
