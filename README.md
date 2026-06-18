@@ -14,7 +14,7 @@ A secure Django-based e-commerce application with enterprise-grade security feat
 
 ## Project Description
 
-**Secure Shopping Application** is a full-featured e-commerce web application built with Django that demonstrates best practices for secure web development. The application includes:
+**ButterflyShop** is a full-featured e-commerce web application built with Django that demonstrates best practices for secure web development. The application includes:
 
 ### Core Features
 - **User Authentication & Authorization**: Custom user model with secure password hashing (Argon2) and role-based access control
