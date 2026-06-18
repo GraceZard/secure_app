@@ -230,6 +230,8 @@ New user account creation with password validation.
 
 ### 3. Product Inventory
 Main product listing page showing available items with images and prices.
+<img width="955" height="443" alt="Shop page" src="https://github.com/user-attachments/assets/b151640b-4e1f-4751-a76e-e01381d10409" />
+
 
 ### 4. Product Management (Admin)
 Add/Edit/Delete products with image upload capabilities.
