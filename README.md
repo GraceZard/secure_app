@@ -1,4 +1,4 @@
-# Secure Shopping Application
+# ButterflyShop
 
 A secure Django-based e-commerce application with enterprise-grade security features, inventory management, shopping cart functionality, and comprehensive audit logging.
 
