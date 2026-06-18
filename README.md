@@ -49,10 +49,6 @@ python manage.py runserver
 
 Open http://127.0.0.1:8000/ in your browser.
 
-## Media / Product images
-
-Product images are stored under `media/` and `product_images/` in the project workspace. When running locally, Django serves these files only in `DEBUG=True`.
-
 ## Tests
 
 Run the project's tests with:
@@ -60,6 +56,9 @@ Run the project's tests with:
 ```bash
 python manage.py test
 ```
+## Media / Product images
+
+Product images are stored under `media/` and `product_images/` in the project workspace. When running locally, Django serves these files only in `DEBUG=True`.
 
 ## Notes
 
