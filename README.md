@@ -226,6 +226,7 @@ User authentication interface with secure password entry.
 
 ### 2. User Registration
 New user account creation with password validation.
+<img width="773" height="648" alt="WhatsApp Image 2026-06-18 at 7 35 15 PM" src="https://github.com/user-attachments/assets/86ea9df9-7870-4bac-9339-0dcda95a74ad" />
 
 
 ### 3. Product Inventory
@@ -250,6 +251,8 @@ Secure order review and completion interface.
 
 ### 7. Order History
 User's past orders with status and details.
+<img width="1089" height="557" alt="image" src="https://github.com/user-attachments/assets/6246ba0c-7818-42ae-a198-dc6a31025210" />
+
 
 ### 8. User Profile
 Profile management page displaying account information.
@@ -263,6 +266,8 @@ Complete activity log showing who did what and when - essential for compliance a
 
 ### 10. Django Admin Dashboard
 System administration interface for managing users, products, and system configuration.
+<img width="1108" height="665" alt="WhatsApp Image 2026-06-18 at 7 32 43 PM" src="https://github.com/user-attachments/assets/14571001-3391-46d0-874d-7ea6b5aaa545" />
+
 
 ---
 
