@@ -240,6 +240,8 @@ Add/Edit/Delete products with image upload capabilities.
 
 ### 5. Shopping Cart
 Dynamic cart showing selected items with quantity adjustments and total pricing.
+<img width="959" height="442" alt="Add to cart page (1)" src="https://github.com/user-attachments/assets/99aa8839-0b2c-49d7-8cd5-08f455010bc2" />
+
 
 ### 6. Checkout Process
 Secure order review and completion interface.
